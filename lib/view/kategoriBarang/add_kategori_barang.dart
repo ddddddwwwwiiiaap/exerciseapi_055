@@ -62,11 +62,12 @@ class _AddKategoriBarangState extends State<AddKategoriBarang> {
                 if (formkey.currentState!.validate()) {
                   formkey.currentState!.save();
                   await widget.saveChanges(widget.kategoriBarangModel);
-                  Navigator.pushReplacement(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const KategoriBarang(),
                     ),
+                    (route) => false,
                   );
                   var snackBar = SnackBar(
                     content: Text(
