@@ -4,19 +4,29 @@ import 'package:materiapi/model/kategori_barang_model.dart';
 import 'package:materiapi/view/kategoriBarang/kategori_barang.dart';
 
 class AddKategoriBarang extends StatefulWidget {
-  const AddKategoriBarang({super.key});
+  final KategoriBarangModel kategoriBarangModel;
+  final Function saveChanges;
+
+  const AddKategoriBarang({
+    super.key,
+    required this.kategoriBarangModel,
+    required this.saveChanges,
+  });
 
   @override
   State<AddKategoriBarang> createState() => _AddKategoriBarangState();
 }
 
 class _AddKategoriBarangState extends State<AddKategoriBarang> {
-  final kategoriBarangController = KategoriBarangController();
-  String? nama;
+  late KategoriBarangController kategoriBarangController;
+  Future<List<KategoriBarangModel>>? kategoriBarangModel;
 
-  void addKategoriBarang() async {
-    KategoriBarangModel kategoriBarang = KategoriBarangModel(nama: nama!);
-    await kategoriBarangController.addKategoriBarang(kategoriBarang);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    kategoriBarangController = KategoriBarangController();
+    kategoriBarangModel = kategoriBarangController.getKategoriBarang();
   }
 
   @override
@@ -36,8 +46,8 @@ class _AddKategoriBarangState extends State<AddKategoriBarang> {
                 hintText: 'Nama Kategori Barang',
                 labelText: 'Nama Kategori Barang',
               ),
-              onChanged: (value) {
-                nama = value;
+              onSaved: (value) {
+                widget.kategoriBarangModel.nama = value!;
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -48,16 +58,20 @@ class _AddKategoriBarangState extends State<AddKategoriBarang> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (formkey.currentState!.validate()) {
                   formkey.currentState!.save();
-                  addKategoriBarang();
+                  await widget.saveChanges(widget.kategoriBarangModel);
                   Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const KategoriBarang()));
-                  var snackBar =
-                      const SnackBar(content: Text('Data Berhasil Disimpan'));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const KategoriBarang(),
+                    ),
+                  );
+                  var snackBar = SnackBar(
+                    content: Text(
+                        'Data ${widget.kategoriBarangModel.nama} Berhasil Disimpan'),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
