@@ -43,23 +43,61 @@ class _KategoriBarangState extends State<KategoriBarang> {
             return Card(
               child: ListTile(
                 title: Text(listKategoriBarang[index].nama),
-                trailing: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UpdateKategoriBarang(
-                          kategoriBarangModel: item,
-                          saveChanges: (item) async {
-                            await kategoriBarangController
-                                .updateKategoriBarang(item);
-                            getKategoriBarang();
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateKategoriBarang(
+                              kategoriBarangModel: item,
+                              saveChanges: (item) async {
+                                await kategoriBarangController
+                                    .updateKategoriBarang(item);
+                                getKategoriBarang();
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Peringatan'),
+                              content: const Text(
+                                  'Apakah anda yakin ingin menghapus data ini?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    kategoriBarangController
+                                        .deleteKategoriBarang(item.id);
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      getKategoriBarang();
+                                    });
+                                  },
+                                  child: const Text('Ya'),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Tidak')),
+                              ],
+                            );
                           },
-                        ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.edit),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             );
