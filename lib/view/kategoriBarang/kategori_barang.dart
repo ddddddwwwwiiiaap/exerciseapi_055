@@ -82,11 +82,11 @@ class _KategoriBarangState extends State<KategoriBarang> {
                               actions: [
                                 TextButton(
                                   onPressed: () {
+                                    Navigator.pop(context);
                                     kategoriBarangController
                                         .deleteKategoriBarang(item.id);
-                                    Navigator.pop(context);
                                     setState(() {
-                                      getKategoriBarang();
+                                      listKategoriBarang.remove(item);
                                     });
                                     var snackBar = SnackBar(
                                         content: Text(
