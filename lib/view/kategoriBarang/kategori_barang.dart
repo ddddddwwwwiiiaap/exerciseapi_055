@@ -90,7 +90,7 @@ class _KategoriBarangState extends State<KategoriBarang> {
                                     });
                                     var snackBar = SnackBar(
                                         content: Text(
-                                            'Data ${item.nama} Berhasil Dihapus'),
+                                            'Data ${item.nama} Berhasil Didelete'),
                                         duration: const Duration(seconds: 1),
                                         backgroundColor: Colors.red);
                                     ScaffoldMessenger.of(context)
