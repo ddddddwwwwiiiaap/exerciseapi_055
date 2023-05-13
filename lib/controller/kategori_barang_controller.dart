@@ -9,12 +9,10 @@ class KategoriBarangController {
   Future<List<KategoriBarangModel>> getKategoriBarang() async {
     var result = await http.get(Uri.parse("${apiUrl}barang/getAllKB"));
     if (result.statusCode == 200) {
-      var data = json.decode(result.body);
-      List<KategoriBarangModel> kategoriBarang = [];
-      for (var i in data) {
-        KategoriBarangModel kategori = KategoriBarangModel.fromMap(i);
-        kategoriBarang.add(kategori);
-      }
+      List<dynamic> data = json.decode(result.body);
+      List<KategoriBarangModel> kategoriBarang = data
+          .map((dynamic item) => KategoriBarangModel.fromMap(item))
+          .toList();
       return kategoriBarang;
     } else {
       throw Exception('Gagal mengambil data kategori barang');
@@ -22,9 +20,9 @@ class KategoriBarangController {
   }
 
   Future addKategoriBarang(KategoriBarangModel kategoriBarang) async {
-    var result = await http.post(Uri.parse("${apiUrl}barang/addKB"), body: {
-      'nama_kategori_barang': kategoriBarang.nama,
-    });
+    var result = await http.post(Uri.parse("${apiUrl}barang/addKB"),
+        body: jsonEncode(kategoriBarang.toMap()),
+        headers: {'Content-Type': 'application/json'});
     if (result.statusCode == 200) {
       return json.decode(result.body);
     } else {
