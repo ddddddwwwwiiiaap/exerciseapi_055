@@ -34,6 +34,11 @@ class _KategoriBarangState extends State<KategoriBarang> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Kategori Barang'),
+        leading: Image.network(
+          'https://id.portal-pokemon.com/play/resources/pokedex/img/pm/cec7897ca02eeb9f693f9cf2197c8bf138e10ab2.png',
+          fit: BoxFit.contain,
+          height: 32,
+        ),
       ),
       body: SafeArea(
         child: ListView.builder(
