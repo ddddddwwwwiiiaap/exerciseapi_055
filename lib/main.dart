@@ -10,9 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: KategoriBarang(),
+      title: 'Flutter ExerciseAPI',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: const KategoriBarang(),
     );
   }
 }
