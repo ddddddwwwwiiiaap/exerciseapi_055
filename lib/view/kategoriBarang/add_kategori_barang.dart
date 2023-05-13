@@ -71,6 +71,8 @@ class _AddKategoriBarangState extends State<AddKategoriBarang> {
                   var snackBar = SnackBar(
                     content: Text(
                         'Data ${widget.kategoriBarangModel.nama} Berhasil Disimpan'),
+                    duration: const Duration(seconds: 1),
+                    backgroundColor: Colors.green,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }

@@ -83,6 +83,13 @@ class _KategoriBarangState extends State<KategoriBarang> {
                                     setState(() {
                                       getKategoriBarang();
                                     });
+                                    var snackBar = SnackBar(
+                                        content: Text(
+                                            'Data ${item.nama} Berhasil Dihapus'),
+                                        duration: const Duration(seconds: 1),
+                                        backgroundColor: Colors.red);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
                                   },
                                   child: const Text('Ya'),
                                 ),
